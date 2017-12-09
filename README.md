@@ -1,7 +1,7 @@
 Introduction
 ============
 
-_Youtube-batch_ is a command line Python script that uploads all videos (e.g.: batch upload) in given folders to Youtube (it should work on any platform -GNU/Linux, BSD, OS X, Windows, ...- that runs Python) using [GitHub:tokland/youtube-upload](https://github.com/tokland/youtube-upload) with uses the Youtube [APIv3](https://developers.google.com/youtube/v3/).
+_youtube-batch_ is a command line Python script that uploads all videos (e.g.: batch upload) in given folders to Youtube (it should work on any platform -GNU/Linux, BSD, OS X, Windows, ...- that runs Python) using the Python script on GitHub [tokland/youtube-upload](https://github.com/tokland/youtube-upload) with uses the Youtube [APIv3](https://developers.google.com/youtube/v3/).
 
 Dependencies
 ============
@@ -19,9 +19,34 @@ $ sudo pip install --upgrade google-api-python-client progressbar2
 Install
 =======
 
+First you have to install the Python script [tokland/youtube-upload](https://github.com/tokland/youtube-upload).
+
 ```
 $ easy_install https://github.com/tokland/youtube-upload/archive/master.zip
-$ easy_install 
+```
+
+Or install it manually
+
+```
+$ wget https://github.com/tokland/youtube-upload/archive/master.zip
+$ unzip master.zip
+$ cd youtube-upload-master
+$ sudo python setup.py install
+```
+
+Then install _youtube-batch_
+
+```
+$ easy_install https://github.com/tkersten09/youtube-batch/archive/master.zip
+```
+
+Or manually as above
+
+```
+$ wget https://github.com/tkersten09/youtube-batch/archive/master.zip
+$ unzip master.zip
+$ cd youtube-batch-master
+$ sudo python setup.py install
 ```
 
 Authentication
@@ -46,26 +71,9 @@ Examples
 * Upload a video:
 
 ```
-$ youtube-batch --title="A.S. Mutter" anne_sophie_mutter.flv
+$ youtube-batch --endings="mpg, mp4" "D:\Dateien\upload1" "D:\Dateien\upload2"
 ```
 
-* Upload a video with extra metadata, with your own client secrets and credentials file, and to a playlist (if not found, it will be created):
-
-```
-$ youtube-upload \
-  --title="A.S. Mutter" 
-  --description="A.S. Mutter plays Beethoven" \
-  --category=Music \
-  --tags="mutter, beethoven" \
-  --recording-date="2011-03-10T15:32:17.0Z" \
-  --default-language="en" \
-  --default-audio-language="en" \
-  --client-secrets=my_client_secrets.json \
-  --credentials-file=my_credentials.json \
-  --playlist "My favorite music" \
-  anne_sophie_mutter.flv
-tx2Zb-145Yz
-```
 *Other extra medata available :* 
  ```
  --privacy (public | unlisted | private)  
@@ -80,16 +88,6 @@ tx2Zb-145Yz
 $ youtube-upload --title="A.S. Mutter" --auth-browser anne_sophie_mutter.flv
 ```
 
-* Split a video with _ffmpeg_
-
-If your video is too big or too long for Youtube limits, split it before uploading:
-
-```
-$ bash examples/split_video_for_youtube.sh video.avi
-video.part1.avi
-video.part2.avi
-video.part3.avi
-```
 * Use a HTTP proxy
 
 Set environment variables *http_proxy* and *https_proxy*:
@@ -97,33 +95,12 @@ Set environment variables *http_proxy* and *https_proxy*:
 ```
 $ export http_proxy=http://user:password@host:port
 $ export https_proxy=$http_proxy
-$ youtube-upload ....
-```
-
-Get available categories
-========================
-
-* Go to the [API Explorer](https://developers.google.com/apis-explorer)
-- Search "youtube categories" -> *youtube.videoCategories.list*
-- This bring you to [youtube.videoCategories.list service](https://developers.google.com/apis-explorer/#search/youtube%20categories/m/youtube/v3/youtube.videoCategories.list)
-- part: `id,snippet`
-- regionCode: `es` (2 letter code of your country)
-- _Authorize and execute_
-
-And see the JSON response below. Note that categories with the attribute `assignable` equal to `false` cannot be used.
-
-Using `shoogle`:
-
-```
-$ shoogle execute --client-secret-file client_secret.json \
-                  youtube:v3.videoCategories.list <(echo '{"part": "id,snippet", "regionCode": "es"}')  | 
-    jq ".items[] | select(.snippet.assignable) | {id: .id, title: .snippet.title}"
+$ youtube-batch ....
 ```
 
 Notes for developers
 ====================
 
-* Main logic of the upload: [main.py](youtube_upload/main.py) (function ```upload_video```).
 * Check the [Youtube Data API](https://developers.google.com/youtube/v3/docs/).
 * Some Youtube API [examples](https://github.com/youtube/api-samples/tree/master/python) provided by Google.
 

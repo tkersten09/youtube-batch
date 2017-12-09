@@ -24,8 +24,8 @@ setup(
 )
 
 @task
-@needs('generate_setup', 'minilib', 'setuptools.command.sdist')
-def sdist():
+@needs('generate_setup', 'minilib')
+def makeSetup():
     """Overrides sdist to make sure that our setup.py is generated."""
     #eggdir = Path('THz.egg-info')
     #eggdir.rmtree()
