@@ -8,10 +8,10 @@ _youtube-batch_ is a command line Python script that uploads all videos (e.g.: b
 * [GitHub:tokland/youtube-upload](https://github.com/tokland/youtube-upload)
 * Packages: [google-api-python-client](https://developers.google.com/api-client-library/python), [progressbar2](https://pypi.python.org/pypi/progressbar2) (optional).
 
-Check if your operating system provides those packages and you dont want to use `easy_install` as shown the `Install` instructions below, otherwise install them with `pip`:
+Check if your operating system provides those packages and you don't want to use `easy_install` as shown the `Install` instructions below, otherwise install them with `pip`:
 
 ```
-$ sudo pip install --upgrade google-api-python-client progressbar2
+sudo pip install --upgrade google-api-python-client progressbar2
 ```
 
 # Install
@@ -19,32 +19,46 @@ $ sudo pip install --upgrade google-api-python-client progressbar2
 First you have to install the Python script [tokland/youtube-upload](https://github.com/tokland/youtube-upload).
 
 ```
-$ easy_install https://github.com/tokland/youtube-upload/archive/master.zip
+easy_install https://github.com/tokland/youtube-upload/archive/master.zip
 ```
 
 Or install it manually
 
 ```
-$ wget https://github.com/tokland/youtube-upload/archive/master.zip
-$ unzip master.zip
-$ cd youtube-upload-master
-$ sudo python setup.py install
+wget https://github.com/tokland/youtube-upload/archive/master.zip
+unzip master.zip
+cd youtube-upload-master
+sudo python setup.py install
 ```
 
 Then install _youtube-batch_
 
 ```
-$ easy_install https://github.com/tkersten09/youtube-batch/archive/master.zip
+easy_install https://github.com/tkersten09/youtube-batch/archive/master.zip
 ```
 
 Or manually as above
 
 ```
-$ wget https://github.com/tkersten09/youtube-batch/archive/master.zip
-$ unzip master.zip
-$ cd youtube-batch-master
-$ sudo python setup.py install
+wget https://github.com/tkersten09/youtube-batch/archive/master.zip
+unzip master.zip
+cd youtube-batch-master
+sudo python setup.py install
 ```
+
+# Install for developers
+
+If you want to add new features to the package, you can clone this folder:
+
+    git clone https://github.com/tkersten09/youtube-batch/ your_folder_name
+
+and install it in development mode via:
+
+    python setup.py develop
+
+This way the package is installed by linking to this cloned git folder. Then you can test code changes **without** having to install the package again with
+
+    python setup.py install
 
 # Authentication
 
@@ -66,7 +80,7 @@ The package includes a default `client_secrets.json` file. If you plan to make a
 * Upload a video:
 
 ```
-$ youtube-batch --endings="mpg, mp4" "D:\Dateien\upload1" "D:\Dateien\upload2"
+youtube-batch --endings="mpg, mp4" "D:\Dateien\upload1" "D:\Dateien\upload2"
 ```
 
 _Other extra medata available :_
@@ -81,7 +95,7 @@ _Other extra medata available :_
 * Upload a video using a browser GUI to authenticate:
 
 ```
-$ youtube-upload --title="A.S. Mutter" --auth-browser anne_sophie_mutter.flv
+youtube-upload --title="A.S. Mutter" --auth-browser anne_sophie_mutter.flv
 ```
 
 * Use a HTTP proxy
@@ -89,9 +103,9 @@ $ youtube-upload --title="A.S. Mutter" --auth-browser anne_sophie_mutter.flv
 Set environment variables _http_proxy_ and _https_proxy_:
 
 ```
-$ export http_proxy=http://user:password@host:port
-$ export https_proxy=$http_proxy
-$ youtube-batch ....
+export http_proxy=http://user:password@host:port
+export https_proxy=$http_proxy
+youtube-batch ....
 ```
 
 # Notes for developers
