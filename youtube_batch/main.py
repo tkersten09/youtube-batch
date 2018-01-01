@@ -91,21 +91,24 @@ def run_main(parser, options, args, output=sys.stdout):
     #args = [r'E:\Digitalisierte Videos\convert\uploadTest']
     #print("args: {}".format(args))
 
+    endings = [str(s.strip()) for s in (options.endings or "").split(",")]
+    file_list = []
     # Checks if all folders exists
     for index, path in enumerate(args):
         p = Path(path)
         if not p.exists():
             raise OptionsError("{0} does not exists".format(path))
-
-    # Get Files with the given endings like mkv, m4v, ...
-    endings = [str(s.strip()) for s in (options.endings or "").split(",")]
-    file_list = []
-    for end in endings:
-        if options.recursive:
-            p = Path(path).glob('**/*.' + end)
-        else:
-            p = Path(path).glob('*.' + end)
-        file_list = itertools.chain(file_list, p)
+        # Get Files with the given endings like mkv, m4v, ...
+        for end in endings:
+            if options.recursive:
+                files = Path(path).glob('**/*.' + end)
+            else:
+                files = Path(path).glob('*.' + end)
+            # Extend file_list with the new Files in files.
+            # files is of type generator, hence chain() is needed
+            # to add those to file_list which is currently of type genertor, too.
+            file_list = itertools.chain(file_list, files)
+    # Convert the generator file_list to a list
     file_list = sorted(file_list)
 
     if len(file_list) == 0:
