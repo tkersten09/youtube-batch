@@ -151,7 +151,9 @@ For example with:
         dest='endings',
         type="string",
         default="mp4, mpg, mkv, avi",
-        help='Video File Endings (separated by commas: "mp4, m4v,...") [mp4, mpg, mkv, avi]')
+        help=
+        'Video File Endings (separated by commas: "mp4, m4v,...") [mp4, mpg, mkv, avi]'
+    )
     parser.add_option(
         '',
         '--chunksize',
@@ -204,7 +206,8 @@ For example with:
         dest='dry_run',
         default=False,
         action='store_true',
-        help='Just print the resulting command lines, but do not start uploading')
+        help=
+        'Just print the resulting command lines, but do not start uploading')
     parser.add_option(
         '-p',
         '--pprint',
@@ -212,7 +215,6 @@ For example with:
         default=False,
         action='store_true',
         help='Use pretty print (pprint) as print function')
-
 
     #Fixes bug for the .exe in windows: The help will be displayed, when no arguments are given.
     if len(arguments) == 0:

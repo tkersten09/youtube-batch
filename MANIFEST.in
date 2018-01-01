@@ -2,4 +2,4 @@ include setup.py
 include pavement.py
 include paver-minilib.zip
 include client_secrets.json
-include bin/youtube-upload.bat
+include bin/youtube-batch
