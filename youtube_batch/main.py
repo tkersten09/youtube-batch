@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 #
-# Upload videos to Youtube from the command-line using APIv3.
+# Uploads all videos in the given folders to Youtube.
+# Using the Python Script youtube-upload from Arnau Sanchez <pyarnau@gmail.com>
+# from https://github.com/tokland/youtube-upload.
 #
-# Author: Arnau Sanchez <pyarnau@gmail.com>
-# Project: https://github.com/tokland/youtube-upload
+# Author: Thomas Kersten <tkersten09@gmail.com>
+# Project: https://github.com/tkersten09/youtube-batch
 """
-Upload all videos in given folder to Youtube from the command-line which.
+Uploads all videos in the given folders to Youtube.
+Usage: youtube-batch [OPTIONS] FOLDER [FOLDER2 ...]
+For example with:
 
     youtube-batch --endings="mp4, mpg, mkv"\
                   --privacy="private"\
-                  --recursive\
-                  --publish-at="2017-01-14T12:00:00+01:00"
-                  D:\Filme C:\File
+                  --publish-at="2017-01-14T20:15:00.0+01:00"\
+                  D:\Dateien\Filme\yesterday D:/Dateien/Filme/upload
 """
 
 import os
