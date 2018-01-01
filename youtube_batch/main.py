@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 import optparse
 import itertools
-# from pprint import pprint as print
+from pprint import pprint as pprint
 from youtube_upload import lib
 
 
@@ -69,8 +69,13 @@ def upload_files(file_list, options, args):
         full_cmd += ' "' + str(file) + '"'
 
         # Run command
-        # print(full_cmd)
-        os.system(full_cmd)
+        if options.dry_run:
+            if options.pprint:
+                pprint(full_cmd)
+            else:
+                print(full_cmd)
+        if not options.dry_run:
+            os.system(full_cmd)
 
 
 def parse_options_error(parser, options, args):
@@ -127,7 +132,7 @@ def main(arguments):
 Uploads all videos in the folders to Youtube.
 For example with:
 
-    youtube-batch --endings="mp4, mpg, mkv"\
+    youtube-batch --dry-run --pprint --endings="mp4, mpg, mkv"\
  --privacy="private" --publish-at="2017-01-14T20:15:00.0+01:00"\
  D:\Dateien\Filme\yesterday D:/Dateien/Filme/upload"""
     parser = optparse.OptionParser(usage=usage)
@@ -145,8 +150,8 @@ For example with:
         '--endings',
         dest='endings',
         type="string",
-        default="mp4",
-        help='Video File Endings (separated by commas: "mp4, m4v,...") [mp4]')
+        default="mp4, mpg, mkv, avi",
+        help='Video File Endings (separated by commas: "mp4, m4v,...") [mp4, mpg, mkv, avi]')
     parser.add_option(
         '',
         '--chunksize',
@@ -191,6 +196,23 @@ For example with:
         default=False,
         action='store_true',
         help='Open a GUI browser to authenticate if required')
+
+    # Debug options
+    parser.add_option(
+        '-d',
+        '--dry-run',
+        dest='dry_run',
+        default=False,
+        action='store_true',
+        help='Just print the resulting command lines, but do not start uploading')
+    parser.add_option(
+        '-p',
+        '--pprint',
+        dest='pprint',
+        default=False,
+        action='store_true',
+        help='Use pretty print (pprint) as print function')
+
 
     #Fixes bug for the .exe in windows: The help will be displayed, when no arguments are given.
     if len(arguments) == 0:
